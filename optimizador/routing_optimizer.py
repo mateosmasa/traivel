@@ -84,16 +84,18 @@ def print_solution(data, manager, routing, solution,trans_typ,indexes):
             previous_index, index, 0)
     index_list_ = [i for i in index_list if i !=0]
     index_list = pairwise(index_list_)
+    index_list_t = [(indexes[i[0]] ,indexes[i[1]]) for i in index_list]
+    print(index_list_t)
     print(list(map(indexes.get, index_list_)))
     plan_output += '{}\n'.format(manager.IndexToNode(index))
-    plan_output += 'Distance of the route: {}m\n'.format(route_distance)
+    plan_output += 'Time of the route: {}m\n'.format(route_distance)
     print(plan_output)
     max_route_distance = max(route_distance, max_route_distance)
-    print('Maximum of the route distances: {}m'.format(max_route_distance)) 
+    print('Maximum of the route times: {}min'.format(max_route_distance)) 
     print_transport(index_list,trans_type)
     return get_route(index_list_,indexes,max_route_distance)
 
-
+#df = df[df[["A","B"]].apply(tuple, 1).isin(AB_col)]
 
 def run(data_,trans_type,time_travel,penalty,indexes):
     """Solve the CVRP problem."""
@@ -197,4 +199,3 @@ if __name__ == '__main__':
     else:
         data_,trans_type= foot.tolist(),np.full(foot.shape,"Foot")
     main(data_,trans_type,time_travel,penalty,indexes,pois_json)
-
